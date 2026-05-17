@@ -85,7 +85,7 @@ public class Registry<[MustBeVariant] TResource> where TResource : Resource
 	public bool HasUid(StringName id) => _registry.Call("has_uid", id).AsBool();
 
 	/// <summary>
-	/// Resolves any identifier (string ID or UID) to its canonical UID form.
+	/// Resolves any identifier (string ID or UID) to its UID form.
 	/// If id is already a registered UID, it is returned unchanged.
 	/// If id is a registered string ID, returns the corresponding UID.
 	/// Returns an empty StringName when id cannot be resolved.
@@ -94,11 +94,13 @@ public class Registry<[MustBeVariant] TResource> where TResource : Resource
 	public StringName GetUid(StringName id) => _registry.Call("get_uid", id).AsStringName();
 
 	/// <summary>
-	/// Returns the string ID associated with the given UID.
-	/// Returns an empty StringName if uid is not found in the registry.
+	/// Resolves any identifier (string ID or UID) to its string ID form.
+	/// If id is already a registered string ID, it is returned unchanged.
+	/// If id is a registered UID, returns the corresponding string ID.
+	/// Returns an empty StringName when id cannot be resolved.
 	/// </summary>
-	/// <param name="uid">UID to resolve.</param>
-	public StringName GetStringId(StringName uid) => _registry.Call("get_string_id", uid).AsStringName();
+	/// <param name="id">String ID or UID to resolve.</param>
+	public StringName GetStringId(StringName id) => _registry.Call("get_string_id", id).AsStringName();
 
 	/// <summary>
 	/// Returns an Array of all registered string IDs.

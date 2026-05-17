@@ -140,30 +140,26 @@ func get_all_string_ids() -> Array[StringName]:
 	return _string_ids_to_uids.keys()
 
 
-## Resolves any identifier (string ID or UID) to its canonical UID form.[br][br]
+## Resolves any identifier (string ID or UID) to its UID form.[br][br]
 ##
 ## If [param id] is already a registered UID, it is returned unchanged.
 ## If [param id] is a registered string ID, returns the corresponding UID.
 ## Returns an empty [StringName] when [param id] cannot be resolved.
 func get_uid(id: StringName) -> StringName:
-	if id.is_empty():
-		return &""
-
-	if id.begins_with("uid://"):
-		return id if _uids_to_string_ids.has(id) else &""
-
-	var string_id := StringName(id)
-	return _string_ids_to_uids.get(string_id, &"")
+	if _uids_to_string_ids.has(id):
+		return id
+	return _string_ids_to_uids.get(id, &"")
 
 
-## Returns the string ID associated with the given UID.
+## Resolves any identifier (string ID or UID) to its string ID form.[br][br]
 ##
-## Returns an empty [StringName] if [param uid] is not found in the registry.
-func get_string_id(uid: StringName) -> StringName:
-	if _uids_to_string_ids.has(uid):
-		return _uids_to_string_ids[uid]
-	else:
-		return &""
+## If [param id] is already a registered string ID, it is returned unchanged.
+## If [param id] is a registered UID, returns the corresponding string ID.
+## Returns an empty [StringName] when [param id] cannot be resolved.
+func get_string_id(id: StringName) -> StringName:
+	if _string_ids_to_uids.has(id):
+		return id
+	return _uids_to_string_ids.get(id, &"")
 
 
 ## Returns an [Array] of all properties that have been baked into the property index.[br][br]
