@@ -66,14 +66,8 @@ If a scan directory is set, entries are managed automatically. Otherwise, you ca
 
 ```gdscript
 const ENEMIES: Registry = preload("res://data/enemy_registry.tres")
-
-# Load a single entry by string ID
 var skeleton: Enemy = ENEMIES.load_entry(&"skeleton")
-
-# Load all entries at once (blocking)
 var all_enemies: Dictionary[StringName, Resource] = ENEMIES.load_all_blocking()
-
-# Load all entries via background threads
 var tracker := ENEMIES.load_all_threaded_request()
 # Poll tracker.progress (0.0–1.0) each frame; read tracker.resources when done
 ```
@@ -89,18 +83,18 @@ var string_id := ENEMIES.get_string_id_of(loaded_resource)
 Set up indexed properties in **Registry Settings** and press **Reindex** to bake the index. At runtime, queries run without loading any resource.
 
 ```gdscript
-# Single property — exact value or predicate
+# Single property (exact value or predicate)
 var legendaries := WEAPONS.filter(&"rarity", Rarity.LEGENDARY)
 var high_level  := WEAPONS.filter(&"level", func(v): return v >= 10)
 
 # AND query across multiple properties (exact values or predicates)
-var legendary_non_boss := ROOMS.where({
+var forest_without_boss := ROOMS.where({
 	&"biome": Biome.FOREST,
 	&"tier": func(t): return t != RoomData.Tier.Boss,
 })
 ```
 
-Properties support dot notation for nested resources: `&"weapon.rarity"` resolves the `rarity` property of the resource stored in `weapon`.
+Properties support dot notation for nested resources: `&"weapon.rarity"` resolves the `rarity` property of the subresource stored in `weapon`.
 
 > The full `Registry` API is documented in the in-editor class reference: **Help > Search Help > Registry**.
 
