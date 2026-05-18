@@ -56,20 +56,21 @@ If a scan directory is set, entries are managed automatically. Otherwise, you ca
 
 ```gdscript
 @export_custom(Registry.PROPERTY_HINT_CUSTOM, "res://data/item_registry.tres") var item: StringName
-# With an <empty> option that maps to an empty string:
-@export_custom(Registry.PROPERTY_HINT_CUSTOM, "res://data/item_registry.tres,true") var item_or_empty: StringName
-# For arrays (duplicates allowed by default, set to false to disable):
-@export_custom(Registry.PROPERTY_HINT_CUSTOM, "res://data/item_registry.tres,true,false") var unique_items: Array[StringName]
 ```
 
 ### Loading entries at runtime
 
 ```gdscript
 const ENEMIES: Registry = preload("res://data/enemy_registry.tres")
+
+# Load a single entry by string ID
 var skeleton: Enemy = ENEMIES.load_entry(&"skeleton")
+
+# Load all entries at once (blocking)
 var all_enemies: Dictionary[StringName, Resource] = ENEMIES.load_all_blocking()
-var tracker := ENEMIES.load_all_threaded_request()
-# Poll tracker.progress (0.0–1.0) each frame; read tracker.resources when done
+
+# Load all entries via background threads
+var tracker: RegistryLoadTracker = ENEMIES.load_all_threaded_request()
 ```
 
 To look up the string ID of an already-loaded resource:
