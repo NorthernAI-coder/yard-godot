@@ -1,4 +1,6 @@
-<h1>
+![preview of the registry editor](etc/preview_2.png)
+
+<h1 align="center">
   <picture>
 	<source media="(prefers-color-scheme: dark)" srcset="addons/yard/editor_only/assets/yard_dark.svg">
 	<source media="(prefers-color-scheme: light)" srcset="addons/yard/editor_only/assets/yard_light.svg">
@@ -7,11 +9,16 @@
   YARD — Yet Another Resource Database
 </h1>
 
-A Godot 4 plugin for managing and querying collections of resources through a dedicated editor interface and runtime API.
+<p align="center">
+  A Godot 4 plugin for managing and querying collections of resources, with a spreadsheet-like editor and a lightweight runtime API.
+</p>
+
+<p align="center">
+  <a href="https://godotengine.org/download/" target="_blank" style="text-decoration:none"><img alt="Godot v4.5+" src="https://img.shields.io/badge/Godot-v4.5+-%23478cbf?color=49A9B4" /></a>
+  <a href="https://github.com/elliotfontaine/yard/releases"  target="_blank" style="text-decoration:none"><img alt="Latest YARD Release" src="https://img.shields.io/github/v/release/elliotfontaine/yard-godot?include_prereleases&label=Release"></a>
+</p>
 
 ## Overview
-
-![preview of the registry editor](etc/preview_2.png)
 
 YARD builds on Godot's [resource system](https://docs.godotengine.org/en/4.5/tutorials/scripting/resources.html). It has two parts:
 
