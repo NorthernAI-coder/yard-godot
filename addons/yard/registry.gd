@@ -3,43 +3,31 @@
 @warning_ignore_start("unused_private_class_variable")
 class_name Registry
 extends Resource
-## A registry associating resources with stable, human-readable string IDs.
+## A catalogue of resources identified by stable, human-readable string IDs.
 ##
-## [Registry] lets you reference resources by stable string IDs (e.g. [code]&"enemy_skeleton"[/code])
-## instead of file paths, which can silently change when assets are moved.
-## It provides a bidirectional map between string IDs and UIDs, helpers to resolve and load
-## entries individually or in bulk (synchronously or via threaded loading).[br][br]
+## Each entry maps a string ID (e.g. [code]&"skeleton"[/code]) to a resource UID. At runtime,
+## [Registry] provides lookup, loading, and optional property-index queries — without ever loading
+## resources you didn't ask for.[br][br]
 ##
-## It also offers an optional property index for querying entries (resources) by their
-## properties at runtime, without loading them. Since the property index is baked into
-## the registry at editor time, querying is fast.
+## Entries are managed through the YARD editor tab and stored in a [code].tres[/code] file.
+## The registry is read-only at runtime.
 ##
 ## [codeblock]
 ## const ENEMIES: Registry = preload("res://data/enemy_registry.tres")
 ## const WEAPONS: Registry = preload("res://data/weapon_registry.tres")
 ##
-## func _show_skeleton() -> void:
-##     var skeleton: Enemy = ENEMIES.load_entry(&"skeleton")
-##     %Sprite.texture = skeleton.creature_sprite
+## # Load a single entry
+## var skeleton: Enemy = ENEMIES.load_entry(&"skeleton")
 ##
-## func _get_legendary_weapons() -> Array[StringName]:
-##     return WEAPONS.filter_by_value(&"rarity", Rarity.LEGENDARY)
-##
-## # You can index and filter by the properties of inner resources, using dot notation.
-## func _get_enemies_with_legendary_weapons() -> Array[StringName]:
-##     return ENEMIES.filter_by_value(&"weapon.rarity", Rarity.LEGENDARY)
+## # Query the property index (baked in the editor)
+## var legendaries := WEAPONS.filter(&"rarity", Rarity.LEGENDARY)
+## var result := ENEMIES.where({
+##     &"weapon.rarity": Rarity.LEGENDARY,  # dot notation for subresources
+##     &"level": func(v): return v >= 10,
+## })
 ## [/codeblock][br]
 ##
-## Registries and their entries are read-only at runtime and must be managed through
-## the dedicated editor tab :[br][br]
-##
-## [img width=1200]res://addons/yard/editor_only/assets/ui_example.png[/img]
-## [br][br]
-##
-## [b]See Also:[/b][br][br]
-##
-## • [Resource] - [i]Base class for serializable objects.[/i][br]
-## • [ResourceLoader] - [i]A singleton for loading resource files.[/i][br]
+## [b]See also:[/b] [Resource], [ResourceLoader]
 
 ## Constant to be used with [annotation @GDScript.@export_custom] instead of a [enum PropertyHint] value.
 ## Enables a dropdown in the inspector for any [StringName], [String], [Array][lb]StringName[rb] or
